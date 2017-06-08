@@ -14,7 +14,9 @@ namespace Dapper
     /// </summary>
     public static partial class SimpleCRUD
     {
-
+        /// <summary>
+        /// 默认构造函数
+        /// </summary>
         static SimpleCRUD()
         {
             SetDialect(_dialect);

@@ -59,7 +59,7 @@ namespace Dapper
             }
 
             if (Debugger.IsAttached)
-                Trace.WriteLine(String.Format("Get<{0}>: {1} with Id: {2}", currenttype, sb, id));
+                Trace.WriteLine(string.Format("Get<{0}>: {1} with Id: {2}", currenttype, sb, id));
 
             var query = await connection.QueryAsync<T>(sb.ToString(), dynParms, transaction, commandTimeout);
             return query.FirstOrDefault();
@@ -102,7 +102,7 @@ namespace Dapper
             }
 
             if (Debugger.IsAttached)
-                Trace.WriteLine(String.Format("GetList<{0}>: {1}", currenttype, sb));
+                Trace.WriteLine(string.Format("GetList<{0}>: {1}", currenttype, sb));
 
             return connection.QueryAsync<T>(sb.ToString(), whereConditions, transaction, commandTimeout);
         }
@@ -140,7 +140,7 @@ namespace Dapper
             sb.Append(" " + conditions);
 
             if (Debugger.IsAttached)
-                Trace.WriteLine(String.Format("GetList<{0}>: {1}", currenttype, sb));
+                Trace.WriteLine(string.Format("GetList<{0}>: {1}", currenttype, sb));
 
             return connection.QueryAsync<T>(sb.ToString(), parameters, transaction, commandTimeout);
         }
@@ -304,7 +304,7 @@ namespace Dapper
             var r = await connection.QueryAsync(sb.ToString(), entityToInsert, transaction, commandTimeout);
             return (TKey)r.First().id;
         }
-        
+
         /// <summary>
         ///  <para>Updates a record or records in the database asynchronously</para>
         ///  <para>By default updates records in the table matching the class name</para>
@@ -318,6 +318,7 @@ namespace Dapper
         ///  <param name="entityToUpdate"></param>
         /// <param name="transaction"></param>
         /// <param name="commandTimeout"></param>
+        /// <param name="token"></param>
         /// <returns>The number of effected records</returns>
         public static Task<int> UpdateAsync<TEntity>(this IDbConnection connection, TEntity entityToUpdate, IDbTransaction transaction = null, int? commandTimeout = null, System.Threading.CancellationToken? token = null)
         {
@@ -337,7 +338,7 @@ namespace Dapper
             BuildWhere(sb, idProps, entityToUpdate);
 
             if (Debugger.IsAttached)
-                Trace.WriteLine(String.Format("Update: {0}", sb));
+                Trace.WriteLine(string.Format("Update: {0}", sb));
 
             System.Threading.CancellationToken cancelToken = token ?? default(System.Threading.CancellationToken);
             return connection.ExecuteAsync(new CommandDefinition(sb.ToString(), entityToUpdate, transaction, commandTimeout, cancellationToken: cancelToken));
