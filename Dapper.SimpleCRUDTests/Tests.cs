@@ -156,6 +156,12 @@ namespace Dapper.SimpleCRUDTests
 
     #endregion
 
+    public static class TestUserPasswordInfo
+    {
+        public static string UserName = "FreshMan";
+        public static string Password = "admin";
+    }
+
     public class Tests
     {
         public Tests(SimpleCRUD.Dialect dbtype)
@@ -180,7 +186,7 @@ namespace Dapper.SimpleCRUDTests
             }
             else if (_dbtype == SimpleCRUD.Dialect.MySQL)
             {
-                connection = new MySqlConnection(String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};", "localhost", "3306", "admin", "admin", "testdb"));
+                connection = new MySqlConnection(String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};", "localhost", "3306", TestUserPasswordInfo.UserName, TestUserPasswordInfo.Password, "testdb"));
                 SimpleCRUD.SetDialect(SimpleCRUD.Dialect.MySQL);
             }
             else
@@ -188,7 +194,6 @@ namespace Dapper.SimpleCRUDTests
                 connection = new SqlConnection(@"Data Source = (LocalDB)\v11.0;Initial Catalog=DapperSimpleCrudTestDb;Integrated Security=True;MultipleActiveResultSets=true;");
                 SimpleCRUD.SetDialect(SimpleCRUD.Dialect.SQLServer);
             }
-
             connection.Open();
             return connection;
         }
